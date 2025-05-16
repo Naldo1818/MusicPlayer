@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vinyl Music Player</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="player-container">
+      <div class="record-player">
+        <div class="turntable">
+          <div class="vinyl" id="vinyl">
+            <div class="vinyl-label" id="vinyl-label">Select a song</div>
+          </div>
+        </div>
+        <div class="tone-arm"></div>
+      </div>
+
+      <div class="controls">
+        <div class="now-playing">
+          <h2 id="track-name">Not Playing</h2>
+          <p id="artist-name">Select a song to begin</p>
+        </div>
+
+        <div class="progress-container">
+          <div class="progress-bar" id="progress-bar">
+            <div id="progress"></div>
+          </div>
+          <div class="time-info">
+            <span id="current-time">0:00</span>
+            <span id="duration">0:00</span>
+          </div>
+        </div>
+
+        <div class="player-controls">
+          <button id="prev-btn">⏮</button>
+          <button id="play-btn">▶</button>
+          <button id="next-btn">⏭</button>
+          <div class="volume-control">
+            <button id="volume-btn">🔊</button>
+            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.7" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="local-music-section">
+      <h2>Local Music Collection</h2>
+      <input type="file" id="file-input" accept="audio/*" multiple directory webkitdirectory />
+      <button id="play-local-btn">Select Music Folder</button>
+      <div class="local-playlist" id="local-playlist"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

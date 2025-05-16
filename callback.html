@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spotify Callback</title>
+    <script>
+        function getHashParams() {
+            const hash = window.location.hash.substring(1);
+            return hash.split('&').reduce(function(result, item) {
+                const parts = item.split('=');
+                result[parts[0]] = decodeURIComponent(parts[1]);
+                return result;
+            }, {});
+        }
+
+        const params = getHashParams();
+        if (params.access_token) {
+            localStorage.setItem('spotify_token', params.access_token);
+            window.location = 'index.html';
+        } else {
+            document.body.innerHTML = `
+                <h2>Authentication Failed</h2>
+                <p>Error: ${params.error || 'Unknown error'}</p>
+                <p>${params.error_description || ''}</p>
+                <button onclick="window.location='index.html'">Go Back</button>
+            `;
+        }
+    </script>
+</head>
+<body>
+    <p>Processing authentication...</p>
+</body>
+</html>
