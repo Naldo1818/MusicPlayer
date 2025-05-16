@@ -1,11 +1,10 @@
- // Player state variables
+
         let localFiles = [];
         let currentLocalAudio = null;
         let currentLocalTrackIndex = -1;
         let currentVolume = 0.7;
         let progressInterval;
 
-        // DOM elements
         const vinyl = document.getElementById('vinyl');
         const toneArm = document.querySelector('.tone-arm');
         const vinylLabel = document.getElementById('vinyl-label');
@@ -34,14 +33,14 @@
         volumeSlider.addEventListener('input', adjustVolume);
         progressBar.addEventListener('click', seek);
 
-        // Functions
+  
         function handleFileSelect(event) {
             const files = Array.from(event.target.files).filter(file => file.type.startsWith('audio/'));
             
             if (files.length > 0) {
                 localFiles = files;
                 renderLocalPlaylist();
-                playLocalTrack(0); // Auto-play first track
+                playLocalTrack(0); 
             } else {
                 alert('No audio files found in the selected folder');
             }
@@ -63,14 +62,12 @@
         }
 
         function getDisplayName(filename) {
-            // Remove file extension and clean up name
             return filename.replace(/\.[^/.]+$/, "")
                           .replace(/_/g, ' ')
                           .replace(/-/g, ' ');
         }
 
         function playLocalTrack(index) {
-            // Stop current playback
             if (currentLocalAudio) {
                 currentLocalAudio.pause();
                 clearInterval(progressInterval);
@@ -79,31 +76,25 @@
                 });
             }
             
-            // Update UI
             document.querySelectorAll('.local-track-item')[index].classList.add('playing');
             
-            // Create audio object
             const file = localFiles[index];
             const url = URL.createObjectURL(file);
             currentLocalAudio = new Audio(url);
             currentLocalAudio.volume = currentVolume;
             currentLocalTrackIndex = index;
             
-            // Play the track
             currentLocalAudio.play();
             
-            // Update vinyl player UI
             vinyl.classList.add('playing');
             toneArm.classList.add('playing');
             trackName.textContent = getDisplayName(file.name);
             artistName.textContent = 'Local File';
             vinylLabel.textContent = getDisplayName(file.name);
             
-            // Set up progress bar updates
             currentLocalAudio.addEventListener('loadedmetadata', updateDuration);
             progressInterval = setInterval(updateProgress, 1000);
             
-            // Handle track end
             currentLocalAudio.addEventListener('ended', playNextTrack);
         }
 
@@ -202,7 +193,6 @@
                 volumeBtn.textContent = volume === 0 ? '🔇' : '🔊';
             }
         }
-        // Inside playLocalTrack(index)
 function playLocalTrack(index) {
     if (currentLocalAudio) {
         currentLocalAudio.pause();
@@ -227,8 +217,7 @@ function playLocalTrack(index) {
     trackName.textContent = getDisplayName(file.name);
     artistName.textContent = 'Local File';
     vinylLabel.textContent = getDisplayName(file.name);
-
-    // 🔄 Set play button to pause icon
+    
     playBtn.textContent = '⏸';
 
     currentLocalAudio.addEventListener('loadedmetadata', updateDuration);
@@ -236,14 +225,12 @@ function playLocalTrack(index) {
 
     currentLocalAudio.addEventListener('ended', () => {
         playNextTrack();
-        // 🔄 When song ends, update play button
         playBtn.textContent = '▶';
         vinyl.classList.remove('playing');
         toneArm.classList.remove('playing');
     });
 }
 
-// Inside togglePlay()
 function togglePlay() {
     if (currentLocalAudio) {
         if (currentLocalAudio.paused) {
@@ -251,14 +238,12 @@ function togglePlay() {
             vinyl.classList.add('playing');
             toneArm.classList.add('playing');
             progressInterval = setInterval(updateProgress, 1000);
-            // 🔄 Update to pause icon
             playBtn.textContent = '⏸';
         } else {
             currentLocalAudio.pause();
             vinyl.classList.remove('playing');
             toneArm.classList.remove('playing');
             clearInterval(progressInterval);
-            // 🔄 Update to play icon
             playBtn.textContent = '▶';
         }
     }
